@@ -1,0 +1,231 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+<title>Surprise for Maaz 🎉</title> 
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> 
+
+<style> 
+:root { 
+--gold: #ffd700; 
+--soft-gold: #fff3b0; 
+--black: #000; 
+} 
+
+*{margin:0;padding:0;box-sizing:border-box;} 
+
+body { 
+background: radial-gradient(circle at center, #0a0a0a, #000); 
+color: var(--soft-gold); 
+font-family: 'Poppins', sans-serif; 
+height: 100vh; 
+overflow:hidden; 
+display:flex; 
+align-items:center; 
+justify-content:center; 
+flex-direction:column; 
+text-align:center; 
+position:relative; 
+} 
+
+/* ---------------- PRELOADER ---------------- */ 
+#preloader { 
+position:fixed; 
+top:0;left:0; 
+width:100%;height:100%; 
+background:linear-gradient(145deg,#000,#111); 
+display:flex; 
+align-items:center; 
+justify-content:center; 
+flex-direction:column; 
+z-index:9999; 
+} 
+
+.loader-circle { 
+width:80px;height:80px; 
+border:5px solid rgba(255,215,0,0.2); 
+border-top:5px solid var(--gold); 
+border-radius:50%; 
+animation:spin 1s linear infinite; 
+margin-bottom:20px; 
+} 
+
+@keyframes spin { 
+to {transform:rotate(360deg);} 
+} 
+
+#loadingText { 
+font-size:1.2rem; 
+color:var(--soft-gold); 
+letter-spacing:1px; 
+opacity:0.8; 
+} 
+
+/* ---------------- MAIN CONTENT ---------------- */ 
+h1 { 
+font-family:'Dancing Script',cursive; 
+font-size:clamp(2.8rem,6vw,5rem); 
+color:var(--gold); 
+text-shadow:0 0 25px rgba(255,215,0,0.8),0 0 60px rgba(255,215,0,0.5); 
+opacity:0; 
+} 
+
+h2 { 
+margin-top:20px; 
+font-weight:600; 
+font-size:1.3rem; 
+color:var(--soft-gold); 
+opacity:0; 
+} 
+
+/* confetti */ 
+.confetti { 
+position:fixed; 
+width:8px;height:14px; 
+top:-10px; 
+opacity:0.8; 
+border-radius:3px; 
+animation:fall linear forwards; 
+} 
+
+@keyframes fall { 
+0% {transform:translateY(0) rotate(0deg);} 
+100% {transform:translateY(110vh) rotate(720deg);} 
+} 
+
+/* balloons */ 
+.balloon { 
+position:fixed; 
+bottom:-100px; 
+width:50px;height:70px; 
+border-radius:50%; 
+background:linear-gradient(to top,var(--gold),var(--soft-gold)); 
+box-shadow:0 0 20px rgba(255,215,0,0.6); 
+animation:floatUp 10s ease-in infinite; 
+} 
+
+.balloon::after { 
+content:""; 
+position:absolute; 
+bottom:-25px;left:50%; 
+width:2px;height:25px; 
+background:rgba(255,255,255,0.4); 
+transform:translateX(-50%); 
+} 
+
+@keyframes floatUp { 
+0% {transform:translateY(0);} 
+100% {transform:translateY(-120vh);} 
+} 
+
+/* button */ 
+button { 
+margin-top:50px; 
+padding:14px 36px; 
+border:none; 
+border-radius:40px; 
+background:linear-gradient(90deg,#c6a100,#ffd700,#fff3b0); 
+color:#000; 
+font-size:1rem; 
+font-weight:600; 
+cursor:pointer; 
+box-shadow:0 0 25px rgba(255,215,0,0.3); 
+transition:transform .3s,box-shadow .3s; 
+} 
+
+button:hover { 
+transform:scale(1.05); 
+box-shadow:0 0 45px rgba(255,215,0,0.7); 
+} 
+</style> 
+</head> 
+
+<body> 
+
+<!-- Preloader --> 
+<div id="preloader"> 
+<div class="loader-circle"></div> 
+<div id="loadingText">Loading Your Surprise 🎁...</div> 
+</div> 
+
+<!-- Main Surprise --> 
+<h1 id="mainText">Happy Birthday Maaz 🎂</h1> 
+<h2 id="subText">You are truly one of a kind ✨</h2> 
+
+<button id="endBtn">Open me </button> 
+
+<audio id="bgMusic" src="happy_bday.mp3" autoplay muted></audio> 
+
+<script> 
+
+// Preloader fade out
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    gsap.to("#preloader",{opacity:0,duration:1,onComplete:()=> {
+      document.getElementById("preloader").style.display="none";
+      startSurprise();
+    }});
+  }, 2500);
+}); 
+
+// Surprise animation sequence
+function startSurprise(){
+  gsap.to("#mainText",{opacity:1,scale:1.1,duration:2,ease:"power4.out"});
+  gsap.to("#subText",{opacity:1,delay:2,duration:1.5,ease:"power2.out"});
+
+  setTimeout(()=>{
+    createConfetti();
+    createBalloons();
+  },1500);
+
+  setInterval(createBalloons,6000);
+}
+
+const music = document.getElementById("bgMusic");
+
+setTimeout(() => {
+  music.muted = false;
+  music.volume = 0.7;
+}, 2000);
+
+// Confetti
+function createConfetti(){
+  const colors=['#ffd700','#fff3b0','#c6a100','#ffef85'];
+  for(let i=0;i<100;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'%';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=3+Math.random()*5+'s';
+    c.style.animationDelay=Math.random()*2+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),8000);
+  }
+}
+
+// Balloons
+function createBalloons(){
+  for(let i=0;i<12;i++){
+    const b=document.createElement('div');
+    b.className='balloon';
+    b.style.left=Math.random()*90+'%';
+    b.style.animationDuration=8+Math.random()*5+'s';
+    b.style.animationDelay=Math.random()*3+'s';
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),12000);
+  }
+}
+
+// Back button
+document.getElementById("endBtn").onclick=()=>{
+  gsap.to("body",{opacity:0,duration:0.8,onComplete:()=>{
+    window.location.href="letter.html";
+  }});
+};
+
+</script> 
+</body> 
+</html>

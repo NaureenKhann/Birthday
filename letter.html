@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Letter for Maaz 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+:root {
+  --black: #0a0a0a;
+  --gold: #ffd700;
+  --soft-gold: #ffeb9a;
+  --dark-gold: #c6a100;
+  --white: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at 30% 30%, #1a1a1a, #000);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* floating candles */
+.candles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.candles span {
+  position: absolute;
+  bottom: -60px;
+  width: 8px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(to top, var(--dark-gold), var(--soft-gold));
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  animation: floatUp 8s linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
+}
+
+/* glowing header */
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+  margin-bottom: 20px;
+  z-index: 2;
+}
+
+/* glassy letter box */
+.letter {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 40px 28px;
+  max-width: 800px;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-align: left;
+  white-space: pre-wrap;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+  z-index: 2;
+  position: relative;
+  color: #f7e8b0;
+}
+
+.letter span {
+  opacity: 0;
+}
+
+/* glowing next button */
+button {
+  margin-top: 40px;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 40px;
+  background: linear-gradient(90deg, var(--dark-gold), var(--gold), var(--soft-gold));
+  color: #000;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 2;
+  position: relative;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+}
+</style>
+</head>
+
+<body>
+  <div class="candles" id="candles"></div>
+
+  <h1>Dear Maaz </h1>
+
+  <div class="letter" id="letterBox"></div>
+
+  <audio id="bgMusic" src="romantic.mp3" preload="auto"></audio>
+<script>
+const text = `On 24th November 2004, the world became brighter — because you arrived😴😴 huhh joking .
+
+You are umm a vry nice person (maybe😴).You annoy me a lot still i enjoy with you dont know why 🤔.Also i wanted to tell you that you are the bestest 🐘🦞🐌 .....hahahahahaha😆😆. 
+
+I enjoy your company 🤔 or maybe you enjyy my company 😁😁.
+Keep Smiling....😊
+
+Happy Birthday Maaz 🎂 
+— From someone who’s endlessly grateful for you.
+Thank me for this amazing letter later 😎😎`;
+
+//typewriter effect
+const box = document.getElementById('letterBox');
+const chars = text.split('');
+chars.forEach((ch, i) => {
+  const span = document.createElement('span');
+  span.textContent = ch;
+  box.appendChild(span);
+  gsap.to(span, { opacity: 1, delay: i * 0.04, duration: 0.02 });
+});
+
+// floating gold candles
+const area = document.getElementById('candles');
+for (let i = 0; i < 30; i++) {
+  const c = document.createElement('span');
+  c.style.left = Math.random() * 100 + '%';
+  c.style.animationDelay = Math.random() * 8 + 's';
+  c.style.animationDuration = 6 + Math.random() * 6 + 's';
+  area.appendChild(c);
+}
+const music = document.getElementById("bgMusic");
+  music.volume = 0.7;
+  music.play().catch(err => {
+    console.log("Autoplay blocked by browser. User interaction needed.");
+  });
+
+// transition to next page
+document.getElementById('nextBtn').onclick = () => {
+  gsap.to("body", {
+    opacity: 0,
+    y: -40,
+    duration: 0.6,
+    onComplete: () => {
+      window.location.href = "surprise.html";
+    }
+  });
+};
+</script>
+</body>
+</html>
